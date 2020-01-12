@@ -22,27 +22,55 @@ function buildTable(data){
     });
 }
 
-function handleClick(){
-    // Grab the datetime value from the filter
-    let date= d3.select('#datetime').property("value");
-    let filteredData= tableData;
+var filters={}
 
-    //Check to see if a date was entered and filter the
-    //data usind that date
-    if (date){
-        // Apply 'filter' to the table data to only keep the
-        // rows where the 'datetime' value mathces the filter value
-        filteredData= filteredData.filter(row=>row.datetime === date);
-    };
+function updateFilters(){
+    let filterValue= d3.select(this).property("value")
+    let filterID= filterChange.attr("id")
+    filter= input.value.toLowerCase();
 
-    // Rebuild the table using the filtered data
-    // @NOTE: if no date was entered, the filteredData will
-    // just be the original tableData
-
-    buildTable(filteredData);
+    if(filterValue){
+        filter[filterID]=filterValue
+        }   
+    else{
+        delete filters[filterID]
+    }
+    filterTable(filters);
 }
 
+function filterTable(){
+    console.log(filters)
+    let filterData=tableData;
+
+    Object.entries(filters).forEach(([keys,value])=>{
+        filterData=filterData.filter(row=> row[keys]===value)
+    });
+    console.log(filterData);
+}
 // Attach an event to listen for the form button
-d3.selectAll('#filter-btn').on("click", handleClick);
+d3.selectAll('#filter-btn').on("click", updateFilters);
 // Build the table when the page loads
 buildTable(tableData);
+
+
+//function myFunction() {
+    // Declare variables
+//    var input, filter, table, tr, td, i, txtValue;
+//    input = document.getElementById("myInput");
+//    filter = input.value.toUpperCase();
+//    table = document.getElementById("myTable");
+//    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+//    for (i = 0; i < tr.length; i++) {
+//     td = tr[i].getElementsByTagName("td")[0];
+//      if (td) {
+//        txtValue = td.textContent || td.innerText;
+//        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//          tr[i].style.display = "";
+//        } else {
+//          tr[i].style.display = "none";
+//        }
+//      }
+//    }
+//  }
