@@ -25,12 +25,12 @@ function buildTable(data){
 var filters={}
 
 function updateFilters(){
-    let filterValue= d3.select(this).property("value")
+    let filterValue= d3.select('#filter-btn').property("value")
     let filterID= filterChange.attr("id")
-    filter= input.value.toLowerCase();
+ //   filter= input.value.toLowerCase();
 
     if(filterValue){
-        filter[filterID]=filterValue
+        filters[filterID]=filterValue
         }   
     else{
         delete filters[filterID]
